@@ -1,0 +1,15 @@
+// java
+       
+	   DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("Users").child("onlineOffline").child(ReciverUID);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1:snapshot.getChildren()){
+                    String Online=snapshot.child("status").getValue().toString();
+                    binding.online.setText(Online);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
