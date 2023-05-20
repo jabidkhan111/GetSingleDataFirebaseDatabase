@@ -1,6 +1,5 @@
 // java
-       
-	   DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("Users").child("onlineOffline").child(ReciverUID);
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("Users").child("onlineOffline").child(ReciverUID);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -13,3 +12,19 @@
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+//Kotlin
+      db = FirebaseFirestore.getInstance()
+        val document: DocumentReference = db!!.collection("Products").document(id!!)
+        document.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()) {
+                Glide.with(this).load(documentSnapshot.getString("productImage")).into(binding.detailProductImage)
+                binding.detailProductName.setText(documentSnapshot.getString("productName"))
+                binding.detailProductSellingPrice.setText(documentSnapshot.getString("productSellingPrice"))
+                binding.detailProductDescription.setText(documentSnapshot.getString("productDescription"))
+                binding.DetailProductMarketPrice.setText(documentSnapshot.getString("productMarketPrice"))
+            } else {
+                Toast.makeText(this, "Something went to wrong...", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Something went to wrong...", Toast.LENGTH_SHORT).show()
+        }
